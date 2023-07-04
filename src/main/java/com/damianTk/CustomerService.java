@@ -55,6 +55,26 @@ public class CustomerService {
         customerRepository.save(customer);
     }
 
+    public void updateCustomer(Customer customerToUpdate, String customerId){
+        Optional<UUID> customerUUID = getUUIDFromString(customerId);
+        if (customerUUID.isEmpty()){
+            logger.info("Invalid CustomerId");
+        }
+        else {
+            Optional<Customer> currentCustomer = customerRepository.findById(customerUUID.get());
+            if (currentCustomer.isEmpty()){
+                logger.info("Customer with this ID does not exist");
+            }
+            else {
+                Customer updatedCustomer = currentCustomer.get();
+                updatedCustomer.setName(customerToUpdate.getName());
+                updatedCustomer.setEmail(customerToUpdate.getEmail());
+                updatedCustomer.setAge(customerToUpdate.getAge());
+                customerRepository.save(updatedCustomer);
+            }
+        }
+    }
+
     public void deleteCustomer(String customerId) {
         Optional<UUID> customerUUID = getUUIDFromString(customerId);
 
@@ -62,7 +82,6 @@ public class CustomerService {
             logger.info("Invalid CustomerId");
         } else {
             customerRepository.deleteById(customerUUID.get());
-
         }
     }
 }
