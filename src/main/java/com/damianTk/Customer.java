@@ -1,14 +1,21 @@
 package com.damianTk;
 
-import java.util.Objects;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 
+import java.util.Objects;
+import java.util.UUID;
+
+
+@Entity
 public class Customer {
-    private Integer id;
+    @Id
+    private UUID id;
     private String name;
     private String email;
     private Integer age;
 
-    public Customer(Integer id,
+    public Customer(UUID id,
                     String name,
                     String email,
                     Integer age) {
@@ -21,11 +28,11 @@ public class Customer {
     public Customer() {
     }
 
-    public Integer getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 
